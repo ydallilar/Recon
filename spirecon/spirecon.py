@@ -101,7 +101,7 @@ def trace_LS(im, config, d_plot=None, show=False, d_output=None, out_im="test.fi
 
     save_trace(config, coeffs)
 
-def order(im, config, out_sz=64, in_sz=102, out_im=None):
+def order(im, config, out_sz=64, in_sz=102, shft=2, out_im=None):
 
     coeffs = read_trace(config)
 

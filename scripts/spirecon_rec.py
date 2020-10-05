@@ -6,6 +6,7 @@ import argparse
 parser = argparse.ArgumentParser(description='Process some integers.')
 parser.add_argument('f_name', help='SPIFFI file to reconstruct')
 parser.add_argument('--config', help='Override config')
+parser.add_argument('--shift', help='Shift the reconstructed image since this doesn\'t use the arc lamps', type=float, default=2)
 parser.add_argument('--path', help='Directory to search for files', default="/home/ydallilar/Documents/SPIFFIER/DETDATA")
 parser.add_argument('--out', help='Naming of the outputs', default="out")
 parser.add_argument('--gfit', action='store_true')
@@ -19,9 +20,10 @@ d_output_tr = "trace_%s.txt" % config
 d_output_sh = "wave_%s.txt" % config
 
 im = fits.getdata("%s" % im_to_r)[4:-4,4:-4]
-im = order(im, config)
+im = order(im, config, shft=2)
 im = apply_shfts(im, config, out)
 im = cube(im, config, out)
 
 if args.gfit:
-    gfit(im)
+    X, Y = gfit(im)
+    print("GFIT -> X : %.1f, Y :%.1f" % (X, Y))
