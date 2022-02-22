@@ -167,7 +167,7 @@ def apply_shfts(im, d_output, out_im="test.fits"):
 
     return r_im
 
-def cube(im, d_output, out_im="test.fits"):
+def cube(im, d_output, header=None, out_im="test.fits"):
 
     shfts = read_shfts(d_output)
     mn_shft, mx_shft = int(np.min(shfts)), int(np.max(shfts))
@@ -185,7 +185,10 @@ def cube(im, d_output, out_im="test.fits"):
     tmp = np.repeat(tmp, 2, axis=0)
     tmp = np.reshape(tmp, [64, 64])
 
-    fits.PrimaryHDU(tmp).writeto("rec_%s.fits" % out_im, overwrite=True)
+    if header is None:
+        fits.PrimaryHDU(tmp).writeto("rec_%s.fits" % out_im, overwrite=True)
+    else:
+        fits.PrimaryHDU(tmp, header=header).writeto("rec_%s.fits" % out_im, overwrite=True)
 
     return tmp
 

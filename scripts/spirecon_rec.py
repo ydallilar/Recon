@@ -22,7 +22,7 @@ d_output_sh = "wave_%s.txt" % config
 im = fits.getdata("%s" % im_to_r)[4:-4,4:-4]
 im = order(im, config, shft=2)
 im = apply_shfts(im, config, out)
-im = cube(im, config, out)
+im = cube(im, config, header=fits.getheader(im_to_r), out_im=out)
 
 if args.gfit:
     X, Y = gfit(im)
